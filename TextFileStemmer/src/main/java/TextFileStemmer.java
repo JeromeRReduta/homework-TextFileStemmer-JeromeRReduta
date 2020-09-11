@@ -33,7 +33,15 @@ public class TextFileStemmer {
 	 */
 	public static ArrayList<String> listStems(String line, Stemmer stemmer) {
 		// TODO Fill in this method.
-		throw new UnsupportedOperationException("Not yet implemented.");
+		
+		String[] words = TextParser.parse(line);
+		ArrayList<String> result = new ArrayList<>();
+		
+		for (String word : words) {
+			result.add(stemmer.stem(word).toString());
+		}
+		
+		return result;
 	}
 
 	/**
