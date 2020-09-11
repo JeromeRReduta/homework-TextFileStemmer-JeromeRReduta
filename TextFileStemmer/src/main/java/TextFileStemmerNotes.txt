@@ -81,4 +81,23 @@ uniqueStems():
 			add return values of uniqueStems(scan.enxtLine()) to result
 
 		return result
+
+
+helper function - getStems(String line, Stemmer stemmer, Object result):
+	Idea: uniqueStems and listStems are only different in which object they use to hold the stems
+
+		So just make one function
+
+	Params:
+		line = line to be stemmed
+		stemmer = stemmer to stem lines
+		result = Object to hold stems
+
+	Pseudocode:
+		String[] words = TextParser.parse(line);
+		
+		for (String word : words):
+			result.add(stemmer.stem(word).toString())
+
+		return result;
 	

@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -33,16 +34,9 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static ArrayList<String> listStems(String line, Stemmer stemmer) {
-		// TODO Fill in this method.
 		
-		String[] words = TextParser.parse(line);
-		ArrayList<String> result = new ArrayList<>();
-		
-		for (String word : words) {
-			result.add(stemmer.stem(word).toString());
-		}
-		
-		return result;
+		return (ArrayList<String>)getStems(line, stemmer, new ArrayList<String>());
+	
 	}
 
 	/**
@@ -57,11 +51,7 @@ public class TextFileStemmer {
 	 * @see #listStems(String, Stemmer)
 	 */
 	public static ArrayList<String> listStems(String line) {
-		// TODO Fill in this method.
-		// TODO Use "new SnowballStemmer(DEFAULT)" to create a stemmer object
-		SnowballStemmer stemmer = new SnowballStemmer(DEFAULT);
-		
-		return listStems(line, stemmer);
+		return listStems(line, new SnowballStemmer(DEFAULT));
 	}
 
 	/**
@@ -76,15 +66,25 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static ArrayList<String> listStems(Path inputFile) throws IOException {
-		// TODO Fill in this method.
 		ArrayList<String> result = new ArrayList<>();
-		Scanner scan = new Scanner(inputFile);
+		try (Scanner scan = new Scanner(inputFile)) {
 		
-		while (scan.hasNext()) {
-			result.addAll(listStems(scan.next()));
+			while (scan.hasNext()) {
+				result.addAll(listStems(scan.next()));
+			}
+			
+			return result;
 		}
 		
-		return result;
+		catch (IOException e) {
+			System.out.println("listStems() file version - error - IOException; returning null");
+			return null;
+		}
+		
+		catch (Exception e) {
+			System.out.println("listStems() file version - error - unknown Exception; returning null");
+			return null;
+		}
 	}
 
 	/**
@@ -115,15 +115,7 @@ public class TextFileStemmer {
 	 */
 	public static TreeSet<String> uniqueStems(String line, Stemmer stemmer) {
 		
-		String[] words = TextParser.parse(line);
-		
-		TreeSet<String> result = new TreeSet<>();
-		
-		for (String word : words) {
-			result.add(stemmer.stem(word).toString());
-		}
-		
-		return result;
+		return (TreeSet<String>)getStems(line, stemmer, new TreeSet<String>());
 	}
 
 	/**
@@ -140,12 +132,44 @@ public class TextFileStemmer {
 	public static TreeSet<String> uniqueStems(Path inputFile) throws IOException {
 		TreeSet<String> result = new TreeSet<>();
 		
-		Scanner scan = new Scanner(inputFile);
+		try (Scanner scan = new Scanner(inputFile)) {
 		
-		
-		while (scan.hasNext()) {
-			result.addAll(uniqueStems(scan.next()));
+			
+			while (scan.hasNext()) {
+				result.addAll(uniqueStems(scan.next()));
+			}
+			
+			return result;
+			
 		}
+		
+		catch (IOException e) {
+			System.out.println("uniqueStems() file version - error - IOException; returning null");
+			return null;
+		}
+		
+		catch (Exception e) {
+			System.out.println("uniqueStems() file version - error - unknown Exception; returning null");
+			return null;
+		}
+	}
+	
+/**
+ * Converts a line to stems and stores stems in a given collection.
+ * 
+ * @param line the line to be stemmed
+ * @param stemmer the stemmer to use
+ * @param result the Object that holds the stems
+ * 
+ * @return a list of stems, sorted based on the inputted Object
+ * 
+ */
+	
+	private static Collection<String> getStems(String line, Stemmer stemmer, Collection<String> result) {
+		String[] words = TextParser.parse(line);
+		
+		for (String word : words)
+			result.add(stemmer.stem(word).toString());
 		
 		return result;
 	}
@@ -161,7 +185,7 @@ public class TextFileStemmer {
 				+ "practicing practis practisants practise practised practiser "
 				+ "practisers practises practising practitioner practitioners";
 
-		System.out.println(uniqueStems(text));
+		//System.out.println(uniqueStems(text));
 		//System.out.println(listStems(text));
 
 		Path inputPath = Path.of("src", "test", "resources", "animals.text");
