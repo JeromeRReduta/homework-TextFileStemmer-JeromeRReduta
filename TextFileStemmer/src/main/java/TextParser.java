@@ -57,7 +57,8 @@ public class TextParser {
 		 * - calling split(...) then clean(...)
 		 * Choose the option that does not generate empty strings.
 		 */
-		throw new UnsupportedOperationException("Not yet implemented.");
+		
+		return split(clean(text));
 	}
 
 	/**
@@ -71,5 +72,9 @@ public class TextParser {
 		System.out.println("clean: " + clean(text));
 		System.out.println("split: " + Arrays.toString(split(text)));
 		System.out.println("parse: " + Arrays.toString(parse(text)));
+		
+		System.out.println("clean empty: " + clean(""));
+		System.out.println("split empty: " + split(""));
+		System.out.println("parse empty: " + parse(""));
 	}
 }

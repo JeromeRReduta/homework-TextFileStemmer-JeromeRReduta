@@ -1,0 +1,25 @@
+TextParser Notes
+
+clean(text):
+	
+	1) Removes non-letters
+	2) Removes accents, etc. from letters
+
+split(text):
+	1) If text is blank, creates an empty string array
+	2) Otherwise, creates string array, where each "word" (char sequence separated by whitespace) is one item
+
+
+
+parse(text):
+	1) Splits text (in case we're given an empty string)
+	2) Cleans text
+
+
+Note: Honestly found no difference btwn (1)Splitting then cleaning each item in String[] and (2) Cleaning and splitting
+
+	So new parse(text) looks like this:
+		return split(clean(text));
+
+ 
+
