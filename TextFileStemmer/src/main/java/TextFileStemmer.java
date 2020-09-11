@@ -148,10 +148,10 @@ public class TextFileStemmer {
 				+ "practisers practises practising practitioner practitioners";
 
 		System.out.println(uniqueStems(text));
-		System.out.println(listStems(text));
+		//System.out.println(listStems(text));
 
 		Path inputPath = Path.of("src", "test", "resources", "animals.text");
 		Set<String> actual = TextFileStemmer.uniqueStems(inputPath);
-		System.out.println(actual);
+		//System.out.println(actual);
 	}
 }
