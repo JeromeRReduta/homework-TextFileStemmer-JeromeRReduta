@@ -1,0 +1,94 @@
+{
+  "tests": [
+    {
+      "name": "Check Commit Count",
+      "setup": "",
+      "run": "bash check_commits",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Check No Warnings",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml clean compile -Dmaven.compiler.failOnWarning=true",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Recompile (No Points)",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml compile test-compile -Dmaven.compiler.failOnWarning=false;",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 0
+    },
+    {
+      "name": "Running TextParserTest",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml test -Dtest=\"TextParser*\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Running Group A Tests",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml test -Dtest=\"TextFileStemmerTest*A_*\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Running Group B Tests",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml test -Dtest=\"TextFileStemmerTest*B_*\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Running Group C Tests",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml test -Dtest=\"TextFileStemmerTest*C_*\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Running Group D Tests",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml test -Dtest=\"TextFileStemmerTest*D_*\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Running Group E Tests",
+      "setup": "",
+      "run": "mvn --no-transfer-progress -f TextFileStemmer/pom.xml test -Dtest=\"TextFileStemmerTest*E_*\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    }
+  ]
+}

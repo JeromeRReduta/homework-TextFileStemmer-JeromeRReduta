@@ -1,0 +1,71 @@
+name: GitHub Classroom Workflow
+
+# the autograder action does not have access to environment variables
+# the autograder action does not seem to use the maven cache
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  HOMEWORK_NAME: HomeworkName
+  MIN_COMMITS: 3
+  NUM_COMMITS: 0
+
+jobs:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Homework Name
+        run: |
+          if [[ ${GITHUB_REPOSITORY} =~ .+\/homework-(.+)-.+ ]]; then
+            export HOMEWORK_NAME=${BASH_REMATCH[1]}
+            echo "::set-env name=HOMEWORK_NAME::${HOMEWORK_NAME}"
+            echo "Running test for the ${HOMEWORK_NAME} homework assignment."
+          else
+            echo "::error ::Repository ${GITHUB_REPOSITORY} in an unexpected format; cannot parse."
+          fi
+
+      - name: Setup Java JDK 14
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+
+      - name: Checkout Homework Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Fresh Test Environment
+        run: |
+          git clone --depth 1 https://github.com/usf-cs212-fall2020/homework-${{ env.HOMEWORK_NAME }}-template.git template
+          mv -f template/${{ env.HOMEWORK_NAME }}/src/test ${{ env.HOMEWORK_NAME }}/src/test
+          mv -f template/${{ env.HOMEWORK_NAME }}/pom.xml ${{ env.HOMEWORK_NAME }}/
+
+      - name: Get Commit Count
+        uses: actions/github-script@v3
+        id: test-repo-status
+        with:
+          script: |
+            const per_page = ${{ env.MIN_COMMITS }} + 1
+            const commits = await github.repos.listCommits({
+              owner:  context.payload.organization.login,
+              repo:  context.payload.repository.name,
+              per_page: per_page
+            });
+            core.exportVariable('NUM_COMMITS', commits.data.length);
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check Commit Count
+        continue-on-error: true
+        run: |
+          if [[ ${NUM_COMMITS} -ge ${MIN_COMMITS} ]]; then
+            echo "echo \"Found at least ${{ env.MIN_COMMITS }} commits.\"" > check_commits
+            echo "exit 0" >> check_commits
+          else
+            echo "echo \"Found only ${{ env.NUM_COMMITS }} commits; at least ${{ env.MIN_COMMITS }} commits required.\"" > check_commits
+            echo "exit 1" >> check_commits
+            echo "::error ::Code failed to compile without warnings."
+          fi
+
+      - name: Run Autograder
+        uses: education/autograding@v1
