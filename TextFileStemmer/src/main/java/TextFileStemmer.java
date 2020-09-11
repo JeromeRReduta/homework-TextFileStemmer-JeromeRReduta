@@ -58,7 +58,9 @@ public class TextFileStemmer {
 	public static ArrayList<String> listStems(String line) {
 		// TODO Fill in this method.
 		// TODO Use "new SnowballStemmer(DEFAULT)" to create a stemmer object
-		throw new UnsupportedOperationException("Not yet implemented.");
+		SnowballStemmer stemmer = new SnowballStemmer(DEFAULT);
+		
+		return listStems(line, stemmer);
 	}
 
 	/**
