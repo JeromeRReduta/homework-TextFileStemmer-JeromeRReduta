@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,7 +68,8 @@ public class TextFileStemmer {
 	 */
 	public static ArrayList<String> listStems(Path inputFile) throws IOException {
 		ArrayList<String> result = new ArrayList<>();
-		try (Scanner scan = new Scanner(inputFile)) {
+		
+		try (Scanner scan = new Scanner(inputFile, StandardCharsets.UTF_8)) {
 		
 			while (scan.hasNext()) {
 				result.addAll(listStems(scan.next()));
@@ -132,7 +134,7 @@ public class TextFileStemmer {
 	public static TreeSet<String> uniqueStems(Path inputFile) throws IOException {
 		TreeSet<String> result = new TreeSet<>();
 		
-		try (Scanner scan = new Scanner(inputFile)) {
+		try (Scanner scan = new Scanner(inputFile, StandardCharsets.UTF_8)) {
 		
 			
 			while (scan.hasNext()) {
