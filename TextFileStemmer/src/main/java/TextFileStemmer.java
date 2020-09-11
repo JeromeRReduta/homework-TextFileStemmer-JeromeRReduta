@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -76,7 +77,14 @@ public class TextFileStemmer {
 	 */
 	public static ArrayList<String> listStems(Path inputFile) throws IOException {
 		// TODO Fill in this method.
-		throw new UnsupportedOperationException("Not yet implemented.");
+		ArrayList<String> result = new ArrayList<>();
+		Scanner scan = new Scanner(inputFile);
+		
+		while (scan.hasNext()) {
+			result.addAll(listStems(scan.next()));
+		}
+		
+		return result;
 	}
 
 	/**
