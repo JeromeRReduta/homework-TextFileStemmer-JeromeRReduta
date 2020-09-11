@@ -1,2 +1,51 @@
 TextFileStemmer Notes
 
+General idea:
+	Really, only 2 algorithms: listStems() & uniqueStems()
+
+	But 3 different version of each algorithm, based on how they process text and whether they need stemmer:
+		1) Line by line, input stemmer
+		2) Line by line, no input stemmer
+		3) Whole file at once, no input stemmer
+
+	So: design 1) first, and then 2) will be based on 1), and 3) based on 2)
+
+listStems():
+	
+
+	//Note: CharSequence is abstract interface - String implements CharSequence (so can just use String when it calls for CharSequence)
+
+	Given:
+		1) String called line
+		2) Stemmer called stemmer
+
+	Goals:
+		1) Parse the line
+		2) Stem every word in the parsed line
+		3) Return an ArrayList<String> containing every stem
+
+	Pseudocode - level 1:
+		set String[] called words = TextParser.parse(line)
+
+		set ArrayList<String> called result
+
+		for each item in words:
+			stem each word w/ stemmer
+			change each stemmed word back to a string
+			add it to result
+
+		return result	
+
+	Pseudocode - level 2:
+		set Stemmer called stemmer = whatever algorithm we're supposed to use
+		return listStems(line, stemmer)
+
+	Pseudocode - level 3:
+		set ArrayList<String> called result
+		
+		set Scanner called scan = Scanner(set to inputFile)
+
+		for each line in inputFile:
+			add return values of listStems(scan.nextLine()) to result
+
+		return result
