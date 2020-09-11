@@ -98,10 +98,8 @@ public class TextFileStemmer {
 	 * @see #DEFAULT
 	 * @see #uniqueStems(String, Stemmer)
 	 */
-	public static TreeSet<String> uniqueStems(String line) {
-		// TODO Fill in this method.
-		// TODO Use "new SnowballStemmer(DEFAULT)" to create a stemmer object
-		throw new UnsupportedOperationException("Not yet implemented.");
+	public static TreeSet<String> uniqueStems(String line) {	
+		return uniqueStems(line, new SnowballStemmer(DEFAULT));
 	}
 
 	/**
@@ -116,8 +114,16 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static TreeSet<String> uniqueStems(String line, Stemmer stemmer) {
-		// TODO Fill in this method.
-		throw new UnsupportedOperationException("Not yet implemented.");
+		
+		String[] words = TextParser.parse(line);
+		
+		TreeSet<String> result = new TreeSet<>();
+		
+		for (String word : words) {
+			result.add(stemmer.stem(word).toString());
+		}
+		
+		return result;
 	}
 
 	/**
@@ -132,8 +138,16 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static TreeSet<String> uniqueStems(Path inputFile) throws IOException {
-		// TODO Fill in this method.
-		throw new UnsupportedOperationException("Not yet implemented.");
+		TreeSet<String> result = new TreeSet<>();
+		
+		Scanner scan = new Scanner(inputFile);
+		
+		
+		while (scan.hasNext()) {
+			result.addAll(uniqueStems(scan.next()));
+		}
+		
+		return result;
 	}
 
 	/**

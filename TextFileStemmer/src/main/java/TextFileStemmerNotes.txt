@@ -49,3 +49,36 @@ listStems():
 			add return values of listStems(scan.nextLine()) to result
 
 		return result
+
+uniqueStems():
+	
+	//Note: TreeSet cannot contain sorted elements
+
+	Honestly, I think I can do the exact same thing I did w/ listStems, but using TreeSet
+
+	Pseudocode - Level 1:
+		Set String[] called words = TextParser.parse(line)
+
+		set TreeSet<String> called result
+	
+		for each item in words:
+			stem each word w/ stemmer
+			change each stemmed word back to a string
+			add it to result
+
+		return result
+
+	Pseudocode - Level 2:
+		set Stemmer called stemmer = whatever algorithm we're supposed to use
+		return uniqueStems(line, stemmer)
+
+	Pseudocode - Level 3:
+		set TreeSet<STring> called result
+		
+		set Scanner called scan = Scanner(set to inputFile)
+
+		for each line in inputFile:
+			add return values of uniqueStems(scan.enxtLine()) to result
+
+		return result
+	
