@@ -35,9 +35,7 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static ArrayList<String> listStems(String line, Stemmer stemmer) {
-		
 		return (ArrayList<String>)getStems(line, stemmer, new ArrayList<String>());
-	
 	}
 
 	/**
@@ -67,15 +65,15 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static ArrayList<String> listStems(Path inputFile) throws IOException {
-		ArrayList<String> result = new ArrayList<>();
+		
+		ArrayList<String> stems = new ArrayList<>();
 		
 		try (Scanner scan = new Scanner(inputFile, StandardCharsets.UTF_8)) {
 		
-			while (scan.hasNext()) {
-				result.addAll(listStems(scan.next()));
-			}
+			while (scan.hasNext()) 
+				stems.addAll(listStems(scan.next()));
 			
-			return result;
+			return stems;
 		}
 		
 		catch (IOException e) {
@@ -116,7 +114,6 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static TreeSet<String> uniqueStems(String line, Stemmer stemmer) {
-		
 		return (TreeSet<String>)getStems(line, stemmer, new TreeSet<String>());
 	}
 
@@ -132,17 +129,15 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static TreeSet<String> uniqueStems(Path inputFile) throws IOException {
-		TreeSet<String> result = new TreeSet<>();
+		
+		TreeSet<String> stems = new TreeSet<>();
 		
 		try (Scanner scan = new Scanner(inputFile, StandardCharsets.UTF_8)) {
-		
 			
-			while (scan.hasNext()) {
-				result.addAll(uniqueStems(scan.next()));
-			}
+			while (scan.hasNext()) 
+				stems.addAll(uniqueStems(scan.next()));
 			
-			return result;
-			
+			return stems;
 		}
 		
 		catch (IOException e) {
@@ -156,24 +151,25 @@ public class TextFileStemmer {
 		}
 	}
 	
-/**
- * Converts a line to stems and stores stems in a given collection.
- * 
- * @param line the line to be stemmed
- * @param stemmer the stemmer to use
- * @param result the Object that holds the stems
- * 
- * @return a list of stems, sorted based on the inputted Object
- * 
- */
+	/**
+	 * Converts a line to stems and stores stems in a given collection.
+	 * 
+	 * @param line the line to be stemmed
+	 * @param stemmer the stemmer to use
+	 * @param stems the Object that holds the stems
+	 * 
+	 * @return a list of stems, sorted based on what type of Object stems is
+	 * 
+	 */
 	
-	private static Collection<String> getStems(String line, Stemmer stemmer, Collection<String> result) {
+	private static Collection<String> getStems(String line, Stemmer stemmer, Collection<String> stems) {
+		
 		String[] words = TextParser.parse(line);
 		
 		for (String word : words)
-			result.add(stemmer.stem(word).toString());
+			stems.add(stemmer.stem(word).toString());
 		
-		return result;
+		return stems;
 	}
 
 	/**
@@ -182,6 +178,7 @@ public class TextFileStemmer {
 	 * @param args unused
 	 * @throws IOException if an I/O error occurs
 	 */
+	
 	public static void main(String[] args) throws IOException {
 		String text = "practic practical practice practiced practicer practices "
 				+ "practicing practis practisants practise practised practiser "
