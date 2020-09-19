@@ -3,6 +3,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,7 +36,7 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static ArrayList<String> listStems(String line, Stemmer stemmer) {
-		return (ArrayList<String>)getStems(line, stemmer, new ArrayList<String>());
+		return getStems(line, stemmer, new ArrayList<String>());
 	}
 
 	/**
@@ -114,7 +115,7 @@ public class TextFileStemmer {
 	 * @see TextParser#parse(String)
 	 */
 	public static TreeSet<String> uniqueStems(String line, Stemmer stemmer) {
-		return (TreeSet<String>)getStems(line, stemmer, new TreeSet<String>());
+		return getStems(line, stemmer, new TreeSet<String>());
 	}
 
 	/**
@@ -162,7 +163,7 @@ public class TextFileStemmer {
 	 * 
 	 */
 	
-	private static Collection<String> getStems(String line, Stemmer stemmer, Collection<String> stems) {
+	private static <C extends Collection<String>> C getStems(String line, Stemmer stemmer, C stems) {
 		
 		String[] words = TextParser.parse(line);
 		
